@@ -14,4 +14,20 @@ public class Constants {
     public static final String DESCRIPTION = "description";
     public static final String PRICE = "price";
     public static final String COLOR = "color";
+    public static final String USER_WITH_LOGIN_NOT_FOUND = "User with login %s not found";
+    public static final String USER_WITH_ID_NOT_FOUND = "User with id %d not found";
+    public static final String EMAIL_IS_ALREADY_REGISTERED = "Email is already registered";
+    public static final String ACCESS_TOKENS = "accessTokens";
+    public static final String REFRESH_TOKENS = "refreshTokens";
+    public static final String BLACK_LIST = "blackList";
+    public static final String CACHE_NOT_FOUND = "Cache not found";
+    public static final String INCORRECT_TOKEN_TYPE_EXCEPTION = "Incorrect token type exception";
+    public static final String AUTHENTICATION_BEARER_TOKEN = "Bearer ";
+    public static final String TOKEN_NEEDED = "Token needed";
+    public static final String TOKEN_HAS_BEEN_BANNED = "Token has been banned";
+    public static final String TYPE = "type";
+    public static final String ID = "id";
+    public static final String ROLE = "role";
+    public static final String FLORISTIC_BOOM = "floristicboom";
+
 }
