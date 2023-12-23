@@ -72,7 +72,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `floristicboom`.`delivery_type` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `price` FLOAT NOT NULL,
   PRIMARY KEY (`id`),
@@ -231,7 +231,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE INDEX idx_pcode
-ON adress (postal_code);
+ON address (postal_code);
 
 CREATE INDEX idx_promocode
 ON bonus (promocode);
