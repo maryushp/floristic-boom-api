@@ -1,5 +1,7 @@
 package com.floristicboom.utils.mappers;
 
+import com.floristicboom.bonus.model.Bonus;
+import com.floristicboom.bonus.model.BonusDTO;
 import com.floristicboom.delivery.type.model.DeliveryType;
 import com.floristicboom.delivery.type.model.DeliveryTypeDTO;
 import com.floristicboom.flower.model.Flower;
@@ -15,4 +17,8 @@ public interface EntityToDtoMapper {
     DeliveryType toDeliveryType(DeliveryTypeDTO deliveryTypeDTO);
 
     DeliveryTypeDTO toDeliveryTypeDTO(DeliveryType deliveryType);
+
+    BonusDTO toBonusDTO(Bonus bonus);
+
+    Bonus toBonus(BonusDTO bonusDTO);
 }
