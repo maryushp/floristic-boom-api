@@ -117,13 +117,13 @@ CREATE TABLE IF NOT EXISTS `floristicboom`.`purchase` (
   `payment_type` ENUM('TRANSFER', 'ONLINE', 'OFFLINE') NULL DEFAULT NULL,
   `employee_id` BIGINT NOT NULL,
   `client_id` BIGINT NOT NULL,
-  `dostawa_id` BIGINT NULL,
+  `delivery_id` BIGINT NULL,
   `bonus_id` INT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_client_purchase` (`client_id` ASC),
   INDEX `fk_employee_purchase` (`employee_id` ASC),
-  INDEX `fk_delivery_purchase` (`dostawa_id` ASC),
+  INDEX `fk_delivery_purchase` (`delivery_id` ASC),
   INDEX `fk_bonus_purchase` (`bonus_id` ASC),
   CONSTRAINT `fk_bonus_purchase`
     FOREIGN KEY (`bonus_id`)
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `floristicboom`.`purchase` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_delivery_purchase`
-    FOREIGN KEY (`dostawa_id`)
+    FOREIGN KEY (`delivery_id`)
     REFERENCES `floristicboom`.`delivery` (`id`),
   CONSTRAINT `fk_purchase_client`
     FOREIGN KEY (`client_id`)
