@@ -55,6 +55,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `floristicboom`.`bouquet` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
   `price` FLOAT NOT NULL,
   `wrapper_color` ENUM('RED', 'GREEN', 'BLUE', 'YELLOW', 'BLACK', 'WHITE', 'ORANGE', 'PURPLE', 'PINK', 'BROWN', 'GRAY', 'CYAN', 'MAGENTA', 'TEAL', 'LIME', 'OLIVE', 'NAVY', 'MAROON') NOT NULL,
   `is_custom` TINYINT NOT NULL,
@@ -228,3 +229,12 @@ CREATE TABLE IF NOT EXISTS `floristicboom`.`user_address` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
+CREATE INDEX idx_pcode
+ON adress (postal_code);
+
+CREATE INDEX idx_promocode
+ON bonus (promocode);
+
+CREATE INDEX idx_fname
+ON flower (name);
