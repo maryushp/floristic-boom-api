@@ -16,4 +16,10 @@ public class Constants {
     public static final String DESCRIPTION = "description";
     public static final String PRICE = "price";
     public static final String COLOR = "color";
+    public static final String DISCOUNT = "discount";
+    public static final String DURATION_DATE = "durationDate";
+    public static final String PROMO_CODE = "promoCode";
+    public static final String BONUS_ALREADY_EXISTS = "Bonus with promo code %s already exists";
+    public static final String BONUS_NOT_FOUND_ID = "Bonus with id %d not found";
+    public static final String BONUS_NOT_FOUND_PROMO_CODE = "Bonus with promo code %s not found";
 }
