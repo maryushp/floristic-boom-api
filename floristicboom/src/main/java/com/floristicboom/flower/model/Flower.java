@@ -1,11 +1,11 @@
 package com.floristicboom.flower.model;
 
+import com.floristicboom.utils.Color;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.awt.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -23,6 +23,7 @@ public class Flower {
     private String name;
     private String description;
     private BigDecimal price;
+    @Enumerated(EnumType.STRING)
     private Color color;
     private Integer availableQuantity;
     private String imageUri;

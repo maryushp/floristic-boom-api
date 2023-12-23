@@ -1,12 +1,13 @@
 package com.floristicboom.flower.model;
 
 
+import com.floristicboom.utils.Color;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 import javax.validation.constraints.NotBlank;
-import java.awt.*;
 import java.math.BigDecimal;
 
 public record FlowerDTO(
