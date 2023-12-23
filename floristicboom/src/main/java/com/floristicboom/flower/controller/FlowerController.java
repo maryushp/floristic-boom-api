@@ -24,7 +24,7 @@ public class FlowerController {
 
     @GetMapping
     public ResponseEntity<Page<FlowerDTO>> readAll(@PageableDefault Pageable pageable) {
-        return ResponseEntity.ok(flowerService.getAll(pageable));
+        return ResponseEntity.ok(flowerService.readAll(pageable));
     }
 
     @GetMapping("/{id}")
