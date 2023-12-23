@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `floristicboom`.`flower` (
   `description` VARCHAR(255) NOT NULL,
   `image_uri` VARCHAR(255),
   `color` ENUM('RED', 'GREEN', 'BLUE', 'YELLOW', 'BLACK', 'WHITE', 'ORANGE', 'PURPLE', 'PINK', 'BROWN', 'GRAY', 'CYAN', 'MAGENTA', 'TEAL', 'LIME', 'OLIVE', 'NAVY', 'MAROON') NOT NULL,
-  `avaliable_quantity` INT NOT NULL,
+  `available_quantity` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB
