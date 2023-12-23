@@ -1,0 +1,12 @@
+name:
+  size:
+    max: "Name must be less than 45 characters"
+    notBlank: "Name must not be blank"
+description:
+  size:
+    max: "Description must be less than 255 characters"
+    notBlank: "Description must not be blank"
+price:
+  positive: "Price must be greater than 0"
+available_quantity:
+  positiveOrZero: "Available quantity must be greater than or equal to 0"
