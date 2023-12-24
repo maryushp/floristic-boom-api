@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
 public class Constants {
     public static final String FLOWER_NOT_FOUND = "Flower with id %d not found";
     public static final String NO_SUCH_ITEM_ERROR = "No Such Item";
-    public static final String ALREADY_EXIST_ERROR = "Item Already Exist";
+    public static final String ALREADY_EXIST_ERROR = "Already Exist";
     public static final String FLOWER_ALREADY_EXISTS = "Flower with name already exists";
     public static final String IMAGE_URI = "image_uri";
     public static final String AVAILABLE_QUANTITY = "availableQuantity";
@@ -29,5 +29,14 @@ public class Constants {
     public static final String ID = "id";
     public static final String ROLE = "role";
     public static final String FLORISTIC_BOOM = "floristicboom";
+    public static final String AUTHORIZATION_HEADER = "Authorization ";
+    public static final String ALREADY_REGISTERED = "User with email %s already registered";
+    public static final String USER_ALREADY_REGISTERED = "User already registered";
+    public static final String USER_WITH_EMAIL_NOT_FOUND = "User with email %s not found";
+    public static final String AUTHENTICATION_EXCEPTION = "Authentication exception";
+    public static final String WRONG_EMAIL_OR_PASSWORD = "Wrong email or password";
+    public static final String AN_INTERNAL_SERVER_ERROR_OCCURRED_WHILE_PROCESSING_THE_REQUEST = "An internal server error occurred while processing the request";
+    public static final String TOKEN_ERROR = "Token error";
+
 
 }
