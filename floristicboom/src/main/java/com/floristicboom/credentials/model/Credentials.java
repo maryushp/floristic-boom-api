@@ -27,11 +27,12 @@ public class Credentials implements UserDetails {
     private String login;
     private String password;
     @Builder.Default
-    private Role role = Role.USER;
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.CLIENT;
     @Builder.Default
     private Boolean isBanned = false;
     @Builder.Default
-    private Boolean isEnabled = false;
+    private Boolean isEnabled = true;
     @OneToOne(mappedBy = "credentials")
     private User user;
 
@@ -52,7 +53,7 @@ public class Credentials implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -62,7 +63,7 @@ public class Credentials implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override

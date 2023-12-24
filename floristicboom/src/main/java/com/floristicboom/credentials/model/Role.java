@@ -1,7 +1,7 @@
 package com.floristicboom.credentials.model;
 
 public enum Role {
-    USER,
+    CLIENT,
     EMPLOYEE,
     ADMIN,
     COURIER
