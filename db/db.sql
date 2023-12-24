@@ -15,7 +15,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `floristicboom`.`bonus` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `promocode` VARCHAR(45) NOT NULL,
+  `promo_code` VARCHAR(45) NOT NULL,
   `discount` FLOAT NOT NULL,
   `duration_date` DATETIME NULL,
   PRIMARY KEY (`id`),
@@ -24,11 +24,12 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 CREATE TABLE IF NOT EXISTS `floristicboom`.`credentials` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(500) NOT NULL,
-  `role` ENUM('ADMIN', 'WORKER', 'CLIENT', 'CURIER') NOT NULL,
+  `role` ENUM('ADMIN', 'EMPLOYEE', 'CLIENT', 'CURIER') NOT NULL,
   `is_banned` TINYINT NOT NULL,
+  `is_enabled` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC))
 ENGINE = InnoDB;
@@ -39,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `floristicboom`.`user` (
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `phone` VARCHAR(12) NOT NULL,
-  `image_uri` VARCHAR(255),
+  `image_uri` VARCHAR(255) NOT NULL,
   `credentials_id` INT NOT NULL,
   PRIMARY KEY (`id`, `credentials_id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
@@ -59,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `floristicboom`.`bouquet` (
   `name` VARCHAR(45) NOT NULL,
   `price` FLOAT NOT NULL,
   `description` VARCHAR(255) NOT NULL,
-  `image_uri` VARCHAR(255),
+  `image_uri` VARCHAR(255) NOT NULL,
   `wrapper_color` ENUM('RED', 'GREEN', 'BLUE', 'YELLOW', 'BLACK', 'WHITE', 'ORANGE', 'PURPLE', 'PINK', 'BROWN', 'GRAY', 'CYAN', 'MAGENTA', 'TEAL', 'LIME', 'OLIVE', 'NAVY', 'MAROON') NOT NULL,
   `is_custom` TINYINT NOT NULL,
   `user_id` BIGINT NOT NULL,
@@ -169,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `floristicboom`.`flower` (
   `name` VARCHAR(45) NOT NULL,
   `price` FLOAT NOT NULL,
   `description` VARCHAR(255) NOT NULL,
-  `image_uri` VARCHAR(255),
+  `image_uri` VARCHAR(255) NOT NULL,
   `color` ENUM('RED', 'GREEN', 'BLUE', 'YELLOW', 'BLACK', 'WHITE', 'ORANGE', 'PURPLE', 'PINK', 'BROWN', 'GRAY', 'CYAN', 'MAGENTA', 'TEAL', 'LIME', 'OLIVE', 'NAVY', 'MAROON') NOT NULL,
   `available_quantity` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -238,8 +239,8 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE INDEX idx_pcode
 ON address (postal_code);
 
-CREATE INDEX idx_promocode
-ON bonus (promocode);
+CREATE INDEX idx_promo_code
+ON bonus (promo_code);
 
 CREATE INDEX idx_fname
 ON flower (name);
