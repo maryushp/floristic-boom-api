@@ -12,7 +12,9 @@ public interface UserService {
 
     Page<UserDTO> readAll(Pageable pageable);
 
-    UserDTO readByEmail(String email);
+    UserDTO findByEmail(String email);
+
+    UserDTO findById(Long id);
 
     void delete(String email);
 }

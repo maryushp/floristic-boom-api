@@ -36,9 +36,15 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserDTO readByEmail(String email) {
+    public UserDTO findByEmail(String email) {
         return userRepository.findByEmail(email).map(entityToDtoMapper::toUserDTO).orElseThrow(
                 () -> new NoSuchItemException(String.format(USER_WITH_EMAIL_NOT_FOUND, email)));
+    }
+
+    @Override
+    public UserDTO findById(Long id) {
+        return userRepository.findById(id).map(entityToDtoMapper::toUserDTO).orElseThrow(
+                () -> new NoSuchItemException(String.format(USER_WITH_ID_NOT_FOUND, id)));
     }
 
     @Override
