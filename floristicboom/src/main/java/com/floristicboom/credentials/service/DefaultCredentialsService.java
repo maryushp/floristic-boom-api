@@ -3,7 +3,7 @@ package com.floristicboom.credentials.service;
 import com.floristicboom.auth.models.RegisterRequest;
 import com.floristicboom.credentials.model.Credentials;
 import com.floristicboom.credentials.repository.CredentialsRepository;
-import com.floristicboom.utils.exceptionhandler.exceptions.EmailAlreadyRegisteredException;
+import com.floristicboom.utils.exceptionhandler.exceptions.UserAlreadyRegisteredException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +20,7 @@ public class DefaultCredentialsService implements CredentialsService {
     @Override
     public Credentials create(RegisterRequest request) {
         credentialsRepository.findByLogin(request.email()).ifPresent(req -> {
-            throw new EmailAlreadyRegisteredException(EMAIL_IS_ALREADY_REGISTERED);
+            throw new UserAlreadyRegisteredException(String.format(ALREADY_REGISTERED, request.email()));
         });
         Credentials credentials = Credentials.builder()
                 .login(request.email())
