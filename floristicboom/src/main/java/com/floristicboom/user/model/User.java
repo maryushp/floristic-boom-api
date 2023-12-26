@@ -27,7 +27,8 @@ public class User {
     private String lastName;
     @Column(unique = true, nullable = false, length = 12)
     private String phone;
-    private String imageUri;
+    @Builder.Default
+    private String imageUri = "";
     @OneToOne
     @JoinColumn(name = "credentials_id")
     @JsonIgnore

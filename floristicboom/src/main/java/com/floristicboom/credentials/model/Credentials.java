@@ -1,5 +1,7 @@
 package com.floristicboom.credentials.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.floristicboom.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -37,7 +39,9 @@ public class Credentials implements UserDetails {
     @Builder.Default
     @Column(nullable = false)
     private Boolean isEnabled = true;
-
+    @OneToOne(mappedBy = "credentials")
+    @JsonIgnore
+    private User user;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
