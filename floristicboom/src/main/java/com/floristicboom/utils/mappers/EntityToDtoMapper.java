@@ -4,6 +4,8 @@ import com.floristicboom.address.model.Address;
 import com.floristicboom.address.model.AddressDTO;
 import com.floristicboom.bonus.model.Bonus;
 import com.floristicboom.bonus.model.BonusDTO;
+import com.floristicboom.delivery.model.Delivery;
+import com.floristicboom.delivery.model.DeliveryDTO;
 import com.floristicboom.delivery.type.model.DeliveryType;
 import com.floristicboom.delivery.type.model.DeliveryTypeDTO;
 import com.floristicboom.auth.models.RegisterRequest;
@@ -34,4 +36,8 @@ public interface EntityToDtoMapper {
     Address toAddress(AddressDTO addressDTO);
 
     AddressDTO toAddressDTO(Address address);
+
+    Delivery toDelivery(DeliveryDTO deliveryDTO);
+
+    DeliveryDTO toDeliveryDTO(Delivery delivery);
 }

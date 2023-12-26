@@ -53,4 +53,5 @@ public class Constants {
     public static final String ADDRESS_ALREADY_EXISTS = "Address with postal code %s and apartment %s already exists";
     public static final String ADDRESS_NOT_FOUND_ID = "Address with id %d not found";
     public static final String ADDRESS_NOT_FOUND_POSTAL_CODE_APARTMENT = "Address with postal code %s and apartment %s not found";
+    public static final String DELIVERY_NOT_FOUND_ID = "Delivery with id %d not found";
 }
