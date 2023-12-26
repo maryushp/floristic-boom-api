@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS `floristicboom`.`bonus` (
   `discount` FLOAT NOT NULL,
   `duration_date` DATETIME NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE(promo_code))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -58,12 +59,12 @@ DEFAULT CHARACTER SET = utf8mb3;
 CREATE TABLE IF NOT EXISTS `floristicboom`.`bouquet` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `price` FLOAT NOT NULL,
+  `price` FLOAT,
   `description` VARCHAR(255) NOT NULL,
   `image_uri` VARCHAR(255) NOT NULL,
   `wrapper_color` ENUM('RED', 'GREEN', 'BLUE', 'YELLOW', 'BLACK', 'WHITE', 'ORANGE', 'PURPLE', 'PINK', 'BROWN', 'GRAY', 'CYAN', 'MAGENTA', 'TEAL', 'LIME', 'OLIVE', 'NAVY', 'MAROON') NOT NULL,
   `is_custom` TINYINT NOT NULL,
-  `user_id` BIGINT NOT NULL,
+  `user_id` BIGINT,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_bouquet_user` (`user_id` ASC),
