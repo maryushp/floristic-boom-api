@@ -10,6 +10,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/api/v1/flower")
 @RequiredArgsConstructor
@@ -18,7 +20,8 @@ public class FlowerController {
 
     @PostMapping
     public ResponseEntity<FlowerDTO> create(@RequestBody @Valid FlowerDTO flowerDTO) {
-        return ResponseEntity.ok(flowerService.create(flowerDTO));
+        FlowerDTO createdFlower = flowerService.create(flowerDTO);
+        return ResponseEntity.created(URI.create("/api/v1/flower/" + createdFlower.id())).body(createdFlower);
     }
 
     @GetMapping
