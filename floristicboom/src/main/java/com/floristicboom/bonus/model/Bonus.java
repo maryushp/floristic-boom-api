@@ -21,7 +21,9 @@ public class Bonus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 45)
     private String promoCode;
+    @Column(nullable = false)
     private BigDecimal discount;
     @JsonFormat(pattern="dd-MM-yyyyTHH:mm:ss")
     private LocalDateTime durationDate;

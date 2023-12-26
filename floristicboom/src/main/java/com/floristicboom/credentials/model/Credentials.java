@@ -1,6 +1,5 @@
 package com.floristicboom.credentials.model;
 
-import com.floristicboom.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -24,17 +23,20 @@ public class Credentials implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false, length = 45)
     private String login;
+    @Column(nullable = false, length = 500)
     private String password;
     @Builder.Default
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role = Role.CLIENT;
     @Builder.Default
+    @Column(nullable = false)
     private Boolean isBanned = false;
     @Builder.Default
+    @Column(nullable = false)
     private Boolean isEnabled = true;
-    @OneToOne(mappedBy = "credentials")
-    private User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -19,7 +19,9 @@ public class DeliveryType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 45)
     private String name;
+    @Column(nullable = false)
     private BigDecimal price;
 
     @Override

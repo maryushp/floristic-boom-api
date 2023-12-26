@@ -1,5 +1,6 @@
 package com.floristicboom.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.floristicboom.credentials.model.Credentials;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,13 +19,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false, length = 45)
     private String firstName;
+    @Column(nullable = false, length = 45)
     private String lastName;
+    @Column(unique = true, nullable = false, length = 12)
     private String phone;
     private String imageUri;
     @OneToOne
     @JoinColumn(name = "credentials_id")
+    @JsonIgnore
     private Credentials credentials;
 
     @Override

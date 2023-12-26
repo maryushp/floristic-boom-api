@@ -20,11 +20,16 @@ public class Flower {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 45)
     private String name;
+    @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Color color;
+    @Column(nullable = false)
     private Integer availableQuantity;
     private String imageUri;
 
