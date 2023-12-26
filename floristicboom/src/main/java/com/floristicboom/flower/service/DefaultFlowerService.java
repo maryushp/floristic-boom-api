@@ -31,7 +31,7 @@ public class DefaultFlowerService implements FlowerService {
     }
 
     @Override
-    public Page<FlowerDTO> getAll(Pageable pageable) {
+    public Page<FlowerDTO> readAll(Pageable pageable) {
         return flowerRepository.findAll(pageable).map(entityToDtoMapper::toFlowerDTO);
     }
 

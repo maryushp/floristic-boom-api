@@ -8,10 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/flower")
 @RequiredArgsConstructor
 public class FlowerController {
@@ -24,7 +23,7 @@ public class FlowerController {
 
     @GetMapping
     public ResponseEntity<Page<FlowerDTO>> readAll(@PageableDefault Pageable pageable) {
-        return ResponseEntity.ok(flowerService.getAll(pageable));
+        return ResponseEntity.ok(flowerService.readAll(pageable));
     }
 
     @GetMapping("/{id}")
