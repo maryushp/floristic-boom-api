@@ -45,6 +45,12 @@ public class Constants {
     public static final String WRONG_EMAIL_OR_PASSWORD = "Wrong email or password";
     public static final String AN_INTERNAL_SERVER_ERROR_OCCURRED_WHILE_PROCESSING_THE_REQUEST = "An internal server error occurred while processing the request";
     public static final String TOKEN_ERROR = "Token error";
-
-
+    public static final String CITY = "city";
+    public static final String STREET = "street";
+    public static final String HOUSE = "house";
+    public static final String APARTMENT = "apartment";
+    public static final String POSTAL_CODE = "postalCode";
+    public static final String ADDRESS_ALREADY_EXISTS = "Address with postal code %s and apartment %s already exists";
+    public static final String ADDRESS_NOT_FOUND_ID = "Address with id %d not found";
+    public static final String ADDRESS_NOT_FOUND_POSTAL_CODE_APARTMENT = "Address with postal code %s and apartment %s not found";
 }

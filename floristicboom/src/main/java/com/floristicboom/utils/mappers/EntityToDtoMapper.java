@@ -1,5 +1,7 @@
 package com.floristicboom.utils.mappers;
 
+import com.floristicboom.address.model.Address;
+import com.floristicboom.address.model.AddressDTO;
 import com.floristicboom.bonus.model.Bonus;
 import com.floristicboom.bonus.model.BonusDTO;
 import com.floristicboom.delivery.type.model.DeliveryType;
@@ -28,4 +30,8 @@ public interface EntityToDtoMapper {
     UserDTO toUserDTO(User user);
 
     User toUser(RegisterRequest registerRequest);
+
+    Address toAddress(AddressDTO addressDTO);
+
+    AddressDTO toAddressDTO(Address address);
 }
