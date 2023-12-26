@@ -41,13 +41,21 @@ public class Flower {
 
         Flower flower = (Flower) o;
 
-        return new EqualsBuilder().append(id, flower.id).append(name, flower.name).append(description,
-                flower.description).append(price, flower.price).append(color, flower.color).append(availableQuantity,
-                flower.availableQuantity).append(imageUri, flower.imageUri).isEquals();
+        return new EqualsBuilder()
+                .append(id, flower.id)
+                .append(name, flower.name)
+                .append(price, flower.price)
+                .append(color, flower.color)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(name).append(price).append(color).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(name)
+                .append(price)
+                .append(color)
+                .toHashCode();
     }
 }

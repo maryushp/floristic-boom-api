@@ -81,11 +81,19 @@ public class Credentials implements UserDetails {
 
         Credentials that = (Credentials) o;
 
-        return new EqualsBuilder().append(id, that.id).append(login, that.login).append(role, that.role).isEquals();
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(login, that.login)
+                .append(role, that.role)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(login).append(role).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(login)
+                .append(role)
+                .toHashCode();
     }
 }

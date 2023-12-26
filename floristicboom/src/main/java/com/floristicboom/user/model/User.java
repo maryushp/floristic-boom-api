@@ -41,11 +41,22 @@ public class User {
 
         User user = (User) o;
 
-        return new EqualsBuilder().append(id, user.id).append(email, user.email).append(firstName, user.firstName).append(lastName, user.lastName).append(phone, user.phone).append(imageUri, user.imageUri).isEquals();
+        return new EqualsBuilder().append(id, user.id)
+                .append(email, user.email)
+                .append(firstName, user.firstName)
+                .append(lastName, user.lastName)
+                .append(phone, user.phone)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(email).append(firstName).append(lastName).append(phone).append(imageUri).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(email)
+                .append(firstName)
+                .append(lastName)
+                .append(phone)
+                .toHashCode();
     }
 }
