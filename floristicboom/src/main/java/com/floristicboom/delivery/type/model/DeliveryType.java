@@ -19,7 +19,9 @@ public class DeliveryType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, length = 45)
     private String name;
+    @Column(nullable = false)
     private BigDecimal price;
 
     @Override
@@ -30,12 +32,18 @@ public class DeliveryType {
 
         DeliveryType deliveryType = (DeliveryType) o;
 
-        return new EqualsBuilder().append(id, deliveryType.getId()).append(name, deliveryType.name).append(price,
-                deliveryType.price).isEquals();
+        return new EqualsBuilder()
+                .append(id, deliveryType.getId())
+                .append(name, deliveryType.name)
+                .append(price, deliveryType.price).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(name).append(price).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(name)
+                .append(price)
+                .toHashCode();
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/api/v1/delivery-type")
 @RequiredArgsConstructor
@@ -18,7 +20,8 @@ public class DeliveryTypeController {
 
     @PostMapping
     public ResponseEntity<DeliveryTypeDTO> create (@RequestBody @Valid DeliveryTypeDTO deliveryTypeDTO) {
-        return ResponseEntity.ok(deliveryTypeService.create(deliveryTypeDTO));
+        DeliveryTypeDTO createdDeliveryType = deliveryTypeService.create(deliveryTypeDTO);
+        return ResponseEntity.created(URI.create("/api/v1/delivery/type/" + createdDeliveryType.id())).body(createdDeliveryType);
     }
 
     @GetMapping

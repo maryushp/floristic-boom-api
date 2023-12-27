@@ -3,6 +3,7 @@ package com.floristicboom.flower.service;
 import com.floristicboom.flower.model.Flower;
 import com.floristicboom.flower.model.FlowerDTO;
 import com.floristicboom.flower.repository.FlowerRepository;
+import com.floristicboom.utils.exceptionhandler.exceptions.FlowerUnavaliableException;
 import com.floristicboom.utils.exceptionhandler.exceptions.ItemAlreadyExistsException;
 import com.floristicboom.utils.exceptionhandler.exceptions.NoSuchItemException;
 import com.floristicboom.utils.mappers.EntityToDtoMapper;
@@ -49,6 +50,15 @@ public class DefaultFlowerService implements FlowerService {
                 });
     }
 
+    @Override
+    public void changeFlowerQuantity(Flower flower, Integer quantity) {
+        if (flower.getAvailableQuantity() < quantity)
+            throw new FlowerUnavaliableException(String.format(NOT_ENOUGH_FLOWERS, flower.getName(),
+                    flower.getColor()));
+        flower.setAvailableQuantity(flower.getAvailableQuantity() - quantity);
+        flowerRepository.save(flower);
+    }
+
     private boolean isFlowerExist(Flower flower) {
         ExampleMatcher flowerMatcher = ExampleMatcher.matching()
                 .withIgnorePaths(IMAGE_URI, AVAILABLE_QUANTITY)
@@ -59,5 +69,4 @@ public class DefaultFlowerService implements FlowerService {
                 .withMatcher(COLOR, exact());
         return flowerRepository.exists(Example.of(flower, flowerMatcher));
     }
-
 }

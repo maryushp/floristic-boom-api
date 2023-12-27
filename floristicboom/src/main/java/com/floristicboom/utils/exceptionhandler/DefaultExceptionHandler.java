@@ -41,8 +41,14 @@ public class DefaultExceptionHandler {
     }
 
     @ExceptionHandler({ItemAlreadyExistsException.class, UserAlreadyRegisteredException.class})
-    public ResponseEntity<Problem> handleObjectAlreadyExistsException(ItemAlreadyExistsException e) {
+    public ResponseEntity<Problem> handleObjectAlreadyExistsException(RuntimeException e) {
         Problem problem = buildProblem(Status.CONFLICT, ALREADY_EXIST_ERROR, e.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(problem);
+    }
+
+    @ExceptionHandler(FlowerUnavaliableException.class)
+    public ResponseEntity<Problem> handleFlowerUnavaliableException(FlowerUnavaliableException e) {
+        Problem problem = buildProblem(Status.CONFLICT, FLOWER_UNAVALIABLE, e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(problem);
     }
 

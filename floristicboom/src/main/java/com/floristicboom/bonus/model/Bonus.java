@@ -21,7 +21,9 @@ public class Bonus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false, length = 45)
     private String promoCode;
+    @Column(nullable = false)
     private BigDecimal discount;
     @JsonFormat(pattern="dd-MM-yyyyTHH:mm:ss")
     private LocalDateTime durationDate;
@@ -34,12 +36,21 @@ public class Bonus {
 
         Bonus bonus = (Bonus) o;
 
-        return new EqualsBuilder().append(id, bonus.getId()).append(promoCode, bonus.promoCode).append(discount,
-                bonus.discount).append(durationDate, bonus.durationDate).isEquals();
+        return new EqualsBuilder()
+                .append(id, bonus.getId())
+                .append(promoCode, bonus.promoCode)
+                .append(discount, bonus.discount)
+                .append(durationDate, bonus.durationDate)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(promoCode).append(discount).append(durationDate).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(promoCode)
+                .append(discount)
+                .append(durationDate)
+                .toHashCode();
     }
 }
