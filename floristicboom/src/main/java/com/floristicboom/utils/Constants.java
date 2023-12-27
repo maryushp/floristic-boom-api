@@ -40,7 +40,6 @@ public class Constants {
     public static final String ID = "id";
     public static final String ROLE = "role";
     public static final String USER_ID = "user_id";
-
     public static final String FLORISTIC_BOOM = "floristicboom";
     public static final String AUTHORIZATION_HEADER = "Authorization ";
     public static final String ALREADY_REGISTERED = "User with email %s already registered";
@@ -51,4 +50,13 @@ public class Constants {
     public static final String AN_INTERNAL_SERVER_ERROR_OCCURRED_WHILE_PROCESSING_THE_REQUEST = "An internal server error occurred while processing the request";
     public static final String TOKEN_ERROR = "Token error";
     public static final String NOT_ENOUGH_FLOWERS = "Not enough flowers \"%s %s\"";
+    public static final String CITY = "city";
+    public static final String STREET = "street";
+    public static final String HOUSE = "house";
+    public static final String APARTMENT = "apartment";
+    public static final String POSTAL_CODE = "postalCode";
+    public static final String ADDRESS_ALREADY_EXISTS = "Address with postal code %s and apartment %s already exists";
+    public static final String ADDRESS_NOT_FOUND_ID = "Address with id %d not found";
+    public static final String ADDRESS_NOT_FOUND_POSTAL_CODE_APARTMENT = "Address with postal code %s and apartment %s not found";
+    public static final String DELIVERY_NOT_FOUND_ID = "Delivery with id %d not found";
 }
