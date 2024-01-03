@@ -41,7 +41,7 @@ public class Constants {
     public static final String ROLE = "role";
     public static final String USER_ID = "user_id";
     public static final String FLORISTIC_BOOM = "floristicboom";
-    public static final String AUTHORIZATION_HEADER = "Authorization ";
+    public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String ALREADY_REGISTERED = "User with email %s already registered";
     public static final String USER_ALREADY_REGISTERED = "User already registered";
     public static final String USER_WITH_EMAIL_NOT_FOUND = "User with email %s not found";
