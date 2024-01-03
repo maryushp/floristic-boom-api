@@ -14,6 +14,7 @@ import org.hibernate.cache.CacheException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -125,5 +126,14 @@ public class JwtService {
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(tokenType.getExpiryDate())
                 .signWith(getSignKey()).compact();
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String email = extractUsername(token);
+        return email.equals(userDetails.getUsername()) && !isTokenBanned(token);
+    }
+
+    public boolean isRefreshToken(String token) {
+        return extractType(token).equals(TokenType.REFRESH);
     }
 }
