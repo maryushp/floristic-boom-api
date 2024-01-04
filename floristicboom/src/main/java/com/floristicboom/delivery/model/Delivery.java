@@ -25,7 +25,7 @@ public class Delivery {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime deliveryDate;
     @ManyToOne
-    @JoinColumn(name = "courier_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "courier_id", referencedColumnName = "id")
     private User courier;
     @ManyToOne
     @JoinColumn(name = "delivery_type_id", referencedColumnName = "id", nullable = false)

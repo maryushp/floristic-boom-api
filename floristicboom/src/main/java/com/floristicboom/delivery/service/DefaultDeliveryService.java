@@ -32,11 +32,14 @@ public class DefaultDeliveryService implements DeliveryService {
         Delivery delivery = entityToDtoMapper.toDelivery(deliveryDTO);
 
         DeliveryType deliveryType = getExistingDeliveryType(delivery.getDeliveryType().getId());
-        User courier = getExistingUser(delivery.getCourier().getId());
         Address address = getExistingAddress(delivery.getAddress().getId());
 
+        if (delivery.getCourier() != null) {
+            User courier = getExistingUser(delivery.getCourier().getId());
+            delivery.setCourier(courier);
+        }
+
         delivery.setDeliveryType(deliveryType);
-        delivery.setCourier(courier);
         delivery.setAddress(address);
 
         return entityToDtoMapper.toDeliveryDTO(deliveryRepository.save(delivery));
