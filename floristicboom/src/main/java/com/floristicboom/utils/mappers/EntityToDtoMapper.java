@@ -60,7 +60,5 @@ public interface EntityToDtoMapper {
 
     PurchaseBouquetDTO toPurchaseBouquetDTO(PurchaseBouquet purchaseBouquet);
 
-    Purchase toPurchase(PurchaseDTO purchaseDTO);
-
     PurchaseDTO toPurchaseDTO(Purchase purchase);
 }
