@@ -14,6 +14,10 @@ import com.floristicboom.delivery.type.model.DeliveryType;
 import com.floristicboom.delivery.type.model.DeliveryTypeDTO;
 import com.floristicboom.flower.model.Flower;
 import com.floristicboom.flower.model.FlowerDTO;
+import com.floristicboom.purchase.model.Purchase;
+import com.floristicboom.purchase.model.PurchaseDTO;
+import com.floristicboom.purchasebouquet.model.PurchaseBouquet;
+import com.floristicboom.purchasebouquet.model.PurchaseBouquetDTO;
 import com.floristicboom.user.model.User;
 import com.floristicboom.user.model.UserDTO;
 import org.mapstruct.Mapper;
@@ -42,6 +46,8 @@ public interface EntityToDtoMapper {
     @Mapping(target = "flowers", ignore = true)
     Bouquet toBouquet(BouquetCreationRequest bouquetCreationRequest);
 
+    Bouquet toBouquet(BouquetDTO bouquetDTO);
+
     Address toAddress(AddressDTO addressDTO);
 
     AddressDTO toAddressDTO(Address address);
@@ -49,4 +55,10 @@ public interface EntityToDtoMapper {
     Delivery toDelivery(DeliveryDTO deliveryDTO);
 
     DeliveryDTO toDeliveryDTO(Delivery delivery);
+
+    PurchaseBouquet toPurchaseBouquet(PurchaseBouquetDTO purchaseBouquetDTO);
+
+    PurchaseBouquetDTO toPurchaseBouquetDTO(PurchaseBouquet purchaseBouquet);
+
+    PurchaseDTO toPurchaseDTO(Purchase purchase);
 }
