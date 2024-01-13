@@ -45,4 +45,16 @@ public class BouquetController {
         bouquetService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<BouquetDTO>> searchBouquets(
+            @PageableDefault Pageable pageable,
+            @RequestParam(required = false) Integer minSize,
+            @RequestParam(required = false) Integer maxSize,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            @RequestParam(required = false) String partialName) {
+        return ResponseEntity.ok(bouquetService.searchBouquets(pageable, minSize, maxSize, minPrice, maxPrice, partialName));
+    }
 }
