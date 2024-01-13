@@ -15,4 +15,10 @@ public interface BouquetService {
     BouquetDTO findById(Long id);
 
     void delete(Long id);
+
+    Page<BouquetDTO> searchBouquets(Pageable pageable,
+                                    Integer minSize, Integer maxSize,
+                                    Integer minPrice, Integer maxPrice,
+                                    String partialName);
+
 }

@@ -15,11 +15,15 @@ import com.floristicboom.flower.service.FlowerService;
 import com.floristicboom.utils.exceptionhandler.exceptions.ItemAlreadyExistsException;
 import com.floristicboom.utils.exceptionhandler.exceptions.NoSuchItemException;
 import com.floristicboom.utils.mappers.EntityToDtoMapper;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,6 +76,42 @@ public class DefaultBouquetService implements BouquetService {
         return bouquetRepository.findById(id).map(entityToDtoMapper::toBouquetDTO).orElseThrow(
                 () -> new NoSuchItemException(String.format(BOUQUET_NOT_FOUND_ID, id))
         );
+    }
+
+    @Override
+    public Page<BouquetDTO> searchBouquets(Pageable pageable,
+                                           Integer minSize, Integer maxSize,
+                                           Integer minPrice, Integer maxPrice,
+                                           String partialName) {
+        Specification<Bouquet> spec = Specification.where(null);
+
+        if (minSize != null && maxSize != null) {
+            spec = spec.and((root, query, criteriaBuilder) -> {
+                Subquery<Long> subquery = query.subquery(Long.class);
+                Root<BouquetFlower> subRoot = subquery.from(BouquetFlower.class);
+
+                subquery.select(criteriaBuilder.sum(subRoot.get("quantity")))
+                        .where(criteriaBuilder.equal(subRoot.get("bouquet"), root));
+
+                Expression<Long> sumExpression = subquery.getSelection();
+
+                return criteriaBuilder.between(sumExpression, minSize.longValue(), maxSize.longValue());
+            });
+        }
+
+        if (minPrice != null && maxPrice != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.between(root.get("price"), BigDecimal.valueOf(minPrice),
+                            BigDecimal.valueOf(maxPrice)));
+        }
+
+        if (partialName != null && !partialName.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(root.get("name"), "%" + partialName + "%"));
+        }
+
+        return bouquetRepository.findAll(spec, pageable)
+                .map(entityToDtoMapper::toBouquetDTO);
     }
 
     @Override
