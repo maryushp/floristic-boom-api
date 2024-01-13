@@ -35,7 +35,7 @@ public class Bouquet {
     @Column(nullable = false)
     @Builder.Default
     private Boolean isCustom = false;
-    @OneToMany
+    @OneToMany(mappedBy = "bouquet")
     private Set<BouquetFlower> flowers;
     @ManyToOne
     @JoinColumn(name = "user_id")
