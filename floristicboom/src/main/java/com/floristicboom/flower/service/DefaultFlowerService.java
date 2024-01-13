@@ -3,6 +3,7 @@ package com.floristicboom.flower.service;
 import com.floristicboom.flower.model.Flower;
 import com.floristicboom.flower.model.FlowerDTO;
 import com.floristicboom.flower.repository.FlowerRepository;
+import com.floristicboom.utils.Color;
 import com.floristicboom.utils.exceptionhandler.exceptions.FlowerUnavaliableException;
 import com.floristicboom.utils.exceptionhandler.exceptions.ItemAlreadyExistsException;
 import com.floristicboom.utils.exceptionhandler.exceptions.NoSuchItemException;
@@ -12,7 +13,10 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 import static com.floristicboom.utils.Constants.*;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
@@ -40,6 +44,33 @@ public class DefaultFlowerService implements FlowerService {
     public FlowerDTO findById(Long id) {
         return flowerRepository.findById(id).map(entityToDtoMapper::toFlowerDTO)
                 .orElseThrow(() -> new NoSuchItemException(String.format(FLOWER_NOT_FOUND, id)));
+    }
+
+    @Override
+    public Page<FlowerDTO> searchFlowers(Pageable pageable,
+                                         Integer minPrice, Integer maxPrice,
+                                         String partialName,
+                                         String color) {
+        Specification<Flower> spec = Specification.where(null);
+
+        if (minPrice != null && maxPrice != null) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.between(root.get("price"), BigDecimal.valueOf(minPrice),
+                            BigDecimal.valueOf(maxPrice)));
+        }
+
+        if (partialName != null && !partialName.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + partialName.toLowerCase() + "%"));
+        }
+
+        if (color != null && !color.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.equal(root.get("color"), Color.valueOf(color)));
+        }
+
+        return flowerRepository.findAll(spec, pageable)
+                .map(entityToDtoMapper::toFlowerDTO);
     }
 
     @Override

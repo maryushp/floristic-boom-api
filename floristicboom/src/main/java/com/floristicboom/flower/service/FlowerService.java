@@ -13,6 +13,11 @@ public interface FlowerService {
 
     FlowerDTO findById(Long id);
 
+    Page<FlowerDTO> searchFlowers(Pageable pageable,
+                                  Integer minPrice, Integer maxPrice,
+                                  String partialName,
+                                  String color);
+
     void delete(Long id);
 
     void changeFlowerQuantity(Flower flower, Integer quantity);

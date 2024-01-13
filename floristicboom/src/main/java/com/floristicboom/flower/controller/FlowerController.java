@@ -34,6 +34,15 @@ public class FlowerController {
         return ResponseEntity.ok(flowerService.findById(id));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<FlowerDTO>> searchFlowers(@PageableDefault Pageable pageable,
+                                                         @RequestParam(required = false) Integer minPrice,
+                                                         @RequestParam(required = false) Integer maxPrice,
+                                                         @RequestParam(required = false) String partialName,
+                                                         @RequestParam(required = false) String color) {
+        return ResponseEntity.ok(flowerService.searchFlowers(pageable, minPrice, maxPrice, partialName, color));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         flowerService.delete(id);
