@@ -1,5 +1,7 @@
 package com.floristicboom.address.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.floristicboom.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -22,6 +24,10 @@ public class Address {
     private String house;
     private String apartment;
     private String postalCode;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Override
     public boolean equals(Object o) {

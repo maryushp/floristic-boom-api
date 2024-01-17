@@ -1,11 +1,14 @@
 package com.floristicboom.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.floristicboom.address.model.Address;
 import com.floristicboom.credentials.model.Credentials;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -29,6 +32,9 @@ public class User {
     private String phone;
     @Builder.Default
     private String imageUri = "";
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private List<Address> addresses;
     @OneToOne
     @JoinColumn(name = "credentials_id")
     @JsonIgnore
