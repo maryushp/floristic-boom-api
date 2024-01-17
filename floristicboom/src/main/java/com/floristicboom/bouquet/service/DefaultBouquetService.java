@@ -115,6 +115,10 @@ public class DefaultBouquetService implements BouquetService {
                     criteriaBuilder.like(root.get(NAME), "%" + partialName + "%"));
         }
 
+
+        spec = spec.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("isCustom"), false));
+
         return bouquetRepository.findAll(spec, pageable)
                 .map(entityToDtoMapper::toBouquetDTO);
     }
