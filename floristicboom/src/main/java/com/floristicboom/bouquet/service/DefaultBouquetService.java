@@ -36,6 +36,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.floristicboom.utils.Constants.*;
+import static com.floristicboom.utils.SearchUtility.getDefaultSpecification;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
 @Service
@@ -100,24 +101,11 @@ public class DefaultBouquetService implements BouquetService {
             });
         }
 
-        if (minPrice != null) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.greaterThanOrEqualTo(root.get(PRICE), BigDecimal.valueOf(minPrice)));
-        }
-
-        if (maxPrice != null) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.lessThanOrEqualTo(root.get(PRICE), BigDecimal.valueOf(maxPrice)));
-        }
-
-        if (partialName != null && !partialName.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get(NAME), "%" + partialName + "%"));
-        }
+        spec = getDefaultSpecification(minPrice, maxPrice, partialName, spec);
 
 
         spec = spec.and((root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("isCustom"), false));
+                criteriaBuilder.equal(root.get(IS_CUSTOM), false));
 
         return bouquetRepository.findAll(spec, pageable)
                 .map(entityToDtoMapper::toBouquetDTO);

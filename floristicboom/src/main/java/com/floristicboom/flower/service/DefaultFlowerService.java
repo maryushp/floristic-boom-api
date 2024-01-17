@@ -16,9 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-
 import static com.floristicboom.utils.Constants.*;
+import static com.floristicboom.utils.SearchUtility.getDefaultSpecification;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
 @Service
@@ -53,20 +52,11 @@ public class DefaultFlowerService implements FlowerService {
                                          String color) {
         Specification<Flower> spec = Specification.where(null);
 
-        if (minPrice != null && maxPrice != null) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.between(root.get("price"), BigDecimal.valueOf(minPrice),
-                            BigDecimal.valueOf(maxPrice)));
-        }
-
-        if (partialName != null && !partialName.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + partialName.toLowerCase() + "%"));
-        }
+        spec = getDefaultSpecification(minPrice, maxPrice, partialName, spec);
 
         if (color != null && !color.isEmpty()) {
             spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.equal(root.get("color"), Color.valueOf(color)));
+                    criteriaBuilder.equal(root.get(COLOR), Color.valueOf(color)));
         }
 
         return flowerRepository.findAll(spec, pageable)

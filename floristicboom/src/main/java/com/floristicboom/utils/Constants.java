@@ -15,6 +15,8 @@ public class Constants {
     public static final String IMAGE_URI = "image_uri";
     public static final String AVAILABLE_QUANTITY = "availableQuantity";
     public static final String NAME = "name";
+    public static final String IS_CUSTOM = "isCustom";
+
     public static final String DESCRIPTION = "description";
     public static final String PRICE = "price";
     public static final String BOUQUET = "bouquet";
