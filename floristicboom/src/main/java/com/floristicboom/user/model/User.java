@@ -32,7 +32,7 @@ public class User {
     private String phone;
     @Builder.Default
     private String imageUri = "";
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Address> addresses;
     @OneToOne
