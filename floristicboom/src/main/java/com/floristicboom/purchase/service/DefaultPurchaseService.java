@@ -1,12 +1,14 @@
 package com.floristicboom.purchase.service;
 
+import com.floristicboom.address.service.AddressService;
 import com.floristicboom.bonus.model.Bonus;
 import com.floristicboom.bonus.service.BonusService;
 import com.floristicboom.bouquet.model.Bouquet;
 import com.floristicboom.bouquet.service.BouquetService;
 import com.floristicboom.credentials.model.Credentials;
 import com.floristicboom.delivery.model.Delivery;
-import com.floristicboom.delivery.service.DeliveryService;
+import com.floristicboom.delivery.repository.DeliveryRepository;
+import com.floristicboom.delivery.type.service.DeliveryTypeService;
 import com.floristicboom.purchase.model.Purchase;
 import com.floristicboom.purchase.model.PurchaseCreationRequest;
 import com.floristicboom.purchase.model.PurchaseDTO;
@@ -43,9 +45,11 @@ public class DefaultPurchaseService implements PurchaseService {
     private final EntityToDtoMapper entityToDtoMapper;
     private final PurchaseBouquetRepository purchaseBouquetRepository;
     private final UserRepository userRepository;
-    private final DeliveryService deliveryService;
     private final BonusService bonusService;
     private final BouquetService bouquetService;
+    private final DeliveryRepository deliveryRepository;
+    private final DeliveryTypeService deliveryTypeService;
+    private final AddressService addressService;
 
     @Override
     @Transactional
@@ -55,13 +59,20 @@ public class DefaultPurchaseService implements PurchaseService {
         User client =
                 userRepository.findByEmail(currentCredentials.getUsername()).orElseThrow(() -> new NoSuchItemException(String.format(USER_WITH_EMAIL_NOT_FOUND, currentCredentials.getUsername())));
 
+        Delivery delivery = Delivery.builder()
+                .address(entityToDtoMapper.toAddress(addressService.findById(purchaseCreationRequest.addressId())))
+                .deliveryType(entityToDtoMapper.toDeliveryType(deliveryTypeService.findById(purchaseCreationRequest.deliveryTypeId())))
+                .build();
+
+        delivery = deliveryRepository.save(delivery);
+
         Purchase purchase = Purchase.builder()
                 .creationDate(LocalDateTime.now())
                 .lastUpdateDate(LocalDateTime.now())
                 .status(Status.PLACED)
                 .paymentType(purchaseCreationRequest.paymentType())
                 .client(client)
-                .delivery(entityToDtoMapper.toDelivery(deliveryService.findById(purchaseCreationRequest.deliveryId())))
+                .delivery(delivery)
                 .build();
 
         if (purchaseCreationRequest.bonusId() != null) {
@@ -94,7 +105,7 @@ public class DefaultPurchaseService implements PurchaseService {
     public PurchaseDTO findById(Long id) {
         return purchaseRepository.findById(id).map(entityToDtoMapper::toPurchaseDTO)
                 .orElseThrow(() -> new NoSuchItemException(String.format(PURCHASE_NOT_FOUND_ID, id))
-        );
+                );
     }
 
     @Override
