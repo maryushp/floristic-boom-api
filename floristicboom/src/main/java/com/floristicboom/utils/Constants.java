@@ -31,6 +31,7 @@ public class Constants {
     public static final String BONUS_NOT_FOUND_PROMO_CODE = "Bonus with promo code %s not found";
     public static final String USER_WITH_LOGIN_NOT_FOUND = "User with login %s not found";
     public static final String USER_WITH_ID_NOT_FOUND = "User with id %d not found";
+    public static final String USER_NOT_FOUND = "User not found";
     public static final String ACCESS_TOKENS = "accessTokens";
     public static final String REFRESH_TOKENS = "refreshTokens";
     public static final String BLACK_LIST = "blackList";

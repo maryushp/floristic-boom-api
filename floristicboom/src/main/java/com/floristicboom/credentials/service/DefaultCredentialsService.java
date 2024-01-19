@@ -9,7 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.floristicboom.utils.Constants.*;
+import static com.floristicboom.utils.Constants.ALREADY_REGISTERED;
+import static com.floristicboom.utils.Constants.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class DefaultCredentialsService implements CredentialsService {
 
     @Override
     public Credentials findByLogin(String login) {
-        return credentialsRepository.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_WITH_LOGIN_NOT_FOUND, login)));
+        return credentialsRepository.findByLogin(login).orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
     }
 
     @Override
@@ -43,7 +44,7 @@ public class DefaultCredentialsService implements CredentialsService {
     public void delete(Long id) {
         credentialsRepository.findById(id).ifPresentOrElse(credentialsRepository::delete,
                 () -> {
-                    throw new UsernameNotFoundException(String.format(USER_WITH_ID_NOT_FOUND, id));
+                    throw new UsernameNotFoundException(USER_NOT_FOUND);
                 });
     }
 }
