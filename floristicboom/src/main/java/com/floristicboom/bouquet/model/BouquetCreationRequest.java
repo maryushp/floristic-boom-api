@@ -22,5 +22,6 @@ public record BouquetCreationRequest(
 
         @NotNull(message = "{positions.notNull}")
         @NotEmpty(message = "{positions.notEmpty}")
+        @Size(max = 5, message = "{positions.size.max}")
         Set<BouquetPosition> positions) {
 }
