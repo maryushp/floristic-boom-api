@@ -41,6 +41,8 @@ public interface EntityToDtoMapper {
 
     User toUser(RegisterRequest registerRequest);
 
+    User toUser(UserDTO userDTO);
+
     BouquetDTO toBouquetDTO(Bouquet bouquet);
 
     @Mapping(target = "flowers", ignore = true)

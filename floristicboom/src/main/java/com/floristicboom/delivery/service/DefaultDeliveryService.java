@@ -1,14 +1,14 @@
 package com.floristicboom.delivery.service;
 
 import com.floristicboom.address.model.Address;
-import com.floristicboom.address.repository.AddressRepository;
+import com.floristicboom.address.service.AddressService;
 import com.floristicboom.delivery.model.Delivery;
 import com.floristicboom.delivery.model.DeliveryDTO;
 import com.floristicboom.delivery.repository.DeliveryRepository;
 import com.floristicboom.delivery.type.model.DeliveryType;
-import com.floristicboom.delivery.type.repository.DeliveryTypeRepository;
+import com.floristicboom.delivery.type.service.DeliveryTypeService;
 import com.floristicboom.user.model.User;
-import com.floristicboom.user.repository.UserRepository;
+import com.floristicboom.user.service.UserService;
 import com.floristicboom.utils.exceptionhandler.exceptions.NoSuchItemException;
 import com.floristicboom.utils.mappers.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
@@ -16,26 +16,27 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import static com.floristicboom.utils.Constants.*;
+import static com.floristicboom.utils.Constants.DELIVERY_NOT_FOUND_ID;
 
 @Service
 @RequiredArgsConstructor
 public class DefaultDeliveryService implements DeliveryService {
     private final DeliveryRepository deliveryRepository;
     private final EntityToDtoMapper entityToDtoMapper;
-    private final DeliveryTypeRepository deliveryTypeRepository;
-    private final AddressRepository addressRepository;
-    private final UserRepository userRepository;
+    private final AddressService addressService;
+    private final UserService userService;
+    private final DeliveryTypeService deliveryTypeService;
 
     @Override
     public DeliveryDTO create(DeliveryDTO deliveryDTO) {
         Delivery delivery = entityToDtoMapper.toDelivery(deliveryDTO);
 
-        DeliveryType deliveryType = getExistingDeliveryType(delivery.getDeliveryType().getId());
-        Address address = getExistingAddress(delivery.getAddress().getId());
+        DeliveryType deliveryType =
+                entityToDtoMapper.toDeliveryType(deliveryTypeService.findById(delivery.getDeliveryType().getId()));
+        Address address = entityToDtoMapper.toAddress(addressService.findById(delivery.getAddress().getId()));
 
         if (delivery.getCourier() != null) {
-            User courier = getExistingUser(delivery.getCourier().getId());
+            User courier = entityToDtoMapper.toUser(userService.findById(delivery.getCourier().getId()));
             delivery.setCourier(courier);
         }
 
@@ -62,20 +63,5 @@ public class DefaultDeliveryService implements DeliveryService {
                 () -> {
                     throw new NoSuchItemException(String.format(DELIVERY_NOT_FOUND_ID, id));
                 });
-    }
-
-    private User getExistingUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchItemException(String.format(USER_WITH_ID_NOT_FOUND, userId)));
-    }
-
-    private DeliveryType getExistingDeliveryType(Long deliveryTypeId) {
-        return deliveryTypeRepository.findById(deliveryTypeId)
-                .orElseThrow(() -> new NoSuchItemException(String.format(DELIVERY_TYPE_NOT_FOUND, deliveryTypeId)));
-    }
-
-    private Address getExistingAddress(Long addressId) {
-        return addressRepository.findById(addressId)
-                .orElseThrow(() -> new NoSuchItemException(String.format(ADDRESS_NOT_FOUND_ID, addressId)));
     }
 }
