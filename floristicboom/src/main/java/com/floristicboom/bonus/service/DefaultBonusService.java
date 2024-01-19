@@ -25,7 +25,7 @@ public class DefaultBonusService implements BonusService {
     @Override
     public BonusDTO create(BonusDTO bonusDTO) {
         Bonus bonus = entityToDtoMapper.toBonus(bonusDTO);
-        if (isBonusExist(bonus))
+        if (ifBonusExist(bonus))
             throw new ItemAlreadyExistsException(String.format(BONUS_ALREADY_EXISTS, bonus.getPromoCode()));
         return entityToDtoMapper.toBonusDTO(bonusRepository.save(bonus));
     }
@@ -55,7 +55,7 @@ public class DefaultBonusService implements BonusService {
                 });
     }
 
-    private boolean isBonusExist(Bonus bonus) {
+    private boolean ifBonusExist(Bonus bonus) {
         ExampleMatcher bonusMatcher = ExampleMatcher.matching()
                 .withIgnorePaths(DISCOUNT, DURATION_DATE)
                 .withMatcher(PROMO_CODE, exact());
