@@ -15,6 +15,7 @@ import com.floristicboom.flower.service.FlowerService;
 import com.floristicboom.utils.exceptionhandler.exceptions.ItemAlreadyExistsException;
 import com.floristicboom.utils.exceptionhandler.exceptions.NoSuchItemException;
 import com.floristicboom.utils.mappers.EntityToDtoMapper;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
@@ -35,6 +36,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.floristicboom.utils.Constants.*;
+import static com.floristicboom.utils.SearchUtility.getDefaultSpecification;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
 @Service
@@ -85,33 +87,38 @@ public class DefaultBouquetService implements BouquetService {
                                            String partialName) {
         Specification<Bouquet> spec = Specification.where(null);
 
-        if (minSize != null && maxSize != null) {
+        if (minSize != null) {
             spec = spec.and((root, query, criteriaBuilder) -> {
-                Subquery<Long> subquery = query.subquery(Long.class);
-                Root<BouquetFlower> subRoot = subquery.from(BouquetFlower.class);
-
-                subquery.select(criteriaBuilder.sum(subRoot.get("quantity")))
-                        .where(criteriaBuilder.equal(subRoot.get("bouquet"), root));
-
-                Expression<Long> sumExpression = subquery.getSelection();
-
-                return criteriaBuilder.between(sumExpression, minSize.longValue(), maxSize.longValue());
+                Expression<Long> sumExpression = getFlowerQuantity(query.subquery(Long.class), criteriaBuilder, root);
+                return criteriaBuilder.greaterThanOrEqualTo(sumExpression, minSize.longValue());
             });
         }
 
-        if (minPrice != null && maxPrice != null) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.between(root.get("price"), BigDecimal.valueOf(minPrice),
-                            BigDecimal.valueOf(maxPrice)));
+        if (maxSize != null) {
+            spec = spec.and((root, query, criteriaBuilder) -> {
+                Expression<Long> sumExpression = getFlowerQuantity(query.subquery(Long.class), criteriaBuilder, root);
+                return criteriaBuilder.lessThanOrEqualTo(sumExpression, maxSize.longValue());
+            });
         }
 
-        if (partialName != null && !partialName.isEmpty()) {
-            spec = spec.and((root, query, criteriaBuilder) ->
-                    criteriaBuilder.like(root.get("name"), "%" + partialName + "%"));
-        }
+        spec = getDefaultSpecification(minPrice, maxPrice, partialName, spec);
+
+
+        spec = spec.and((root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get(IS_CUSTOM), false));
 
         return bouquetRepository.findAll(spec, pageable)
                 .map(entityToDtoMapper::toBouquetDTO);
+    }
+
+    private Expression<Long> getFlowerQuantity(Subquery<Long> query, CriteriaBuilder criteriaBuilder,
+                                               Root<Bouquet> root) {
+        Root<BouquetFlower> subRoot = query.from(BouquetFlower.class);
+
+        query.select(criteriaBuilder.sum(subRoot.get(QUANTITY)))
+                .where(criteriaBuilder.equal(subRoot.get(BOUQUET), root));
+
+        return query.getSelection();
     }
 
     @Override
@@ -173,5 +180,4 @@ public class DefaultBouquetService implements BouquetService {
         bouquet.setIsCustom(!credentials.getRole().equals(Role.ADMIN));
         bouquet.setUser(credentials.getUser());
     }
-
 }
